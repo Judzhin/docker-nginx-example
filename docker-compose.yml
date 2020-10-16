@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+
+  nginx:
+    container_name: nginx-example
+    build:
+      context: .
+      target: ${APP_ENV}
+      dockerfile: .docker/nginx/Dockerfile
+      args:
+        APP_ENV: ${APP_ENV}
+    volumes:
+    - ./:/var/www/html:rw
+    ports:
+    - 80:80
