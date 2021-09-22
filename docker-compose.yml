@@ -3,14 +3,15 @@ version: '3.5'
 services:
 
   nginx:
-    container_name: nginx-example
+    container_name: nginx-example-${APP_ENV:-dev}
     build:
       context: .
-      target: ${APP_ENV}
+      target: ${APP_ENV:-dev}
       dockerfile: .docker/nginx/Dockerfile
       args:
-        APP_ENV: ${APP_ENV}
+        APP_ENV: ${APP_ENV:-dev}
     volumes:
+    - .docker/nginx/.htpasswd:/etc/nginx/.htpasswd
     - ./:/var/www/html:rw
     ports:
-    - 80:80
+    - ${NGINX_PORT:-8080}:80
